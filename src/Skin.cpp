@@ -1,7 +1,7 @@
 #include "Skin.hpp"
+#include <cerrno>
 #include <cstdio>
 #include <cstring>
-#include <cerrno>
 #include <fstream>
 
 static const char *SETTINGS_FILE = "Stalys.json";
