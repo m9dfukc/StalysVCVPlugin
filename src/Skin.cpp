@@ -1,7 +1,10 @@
 #include "Skin.hpp"
 #include <cstdio>
+#include <cstring>
+#include <cerrno>
 #include <fstream>
-#include <unistd.h>
+
+static const char *SETTINGS_FILE = "Stalys.json";
 
 Skins &Skins::skins() {
   static Skins instance;
@@ -29,8 +32,8 @@ void Skins::loadSkins() {
   availableSkins.push_back(Skin("dark", "Dark"));
   defaultKey = "hornet";
 
-  std::string path = rack::asset::user("stalys.json");
-  if (access(path.c_str(), R_OK) != 0) {
+  std::string path = rack::asset::user(SETTINGS_FILE);
+  if (!rack::system::isFile(path)) {
     return;
   }
 
@@ -51,7 +54,7 @@ void Skins::loadSkins() {
       WARN("Stalys: \"skins\" section has no key \"default\" in %s\n",
            path.c_str());
     } else {
-      std::string dk = json_string_value(d);
+      std::string dk = json_is_string(d) ? json_string_value(d) : "";
       if (!validKey(dk)) {
         WARN("Stalys: \"skins\" \"default\" value \"%s\" is invalid in %s\n",
              dk.c_str(), path.c_str());
@@ -60,6 +63,7 @@ void Skins::loadSkins() {
           WARN("Stalys:   %s\n", s.key.c_str());
         }
       } else {
+        defaultKey = dk;
         INFO("Stalys: skin information loaded successfully from %s\n",
              path.c_str());
       }
@@ -73,7 +77,7 @@ void Skins::setDefaultSkin(std::string skinKey) {
   if (skinKey == "default") {
     skinKey = "hornet";
   }
-  std::string path = rack::asset::user("Stalys.json");
+  std::string path = rack::asset::user(SETTINGS_FILE);
   std::string error;
   if (!validKey(skinKey)) {
     error = "invalid key: " + skinKey;

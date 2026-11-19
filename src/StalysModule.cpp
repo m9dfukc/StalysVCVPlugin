@@ -8,18 +8,19 @@ json_t *StalysModule::dataToJson() {
   if (theme != "default") {
     json_object_set_new(root, SKIN, json_string(theme.c_str()));
   }
-  return toJson(root);
+  return root;
 }
 
 void StalysModule::dataFromJson(json_t *root) {
+  // Note: Rack 1 plugins called Module::fromJson() from here. In Rack 2,
+  // Module::fromJson() expects the full module JSON (with "plugin"/"model")
+  // and throws when given only the "data" object, so it must not be called.
   json_t *s = json_object_get(root, SKIN);
-  if (s) {
+  if (s && json_is_string(s)) {
     setSkin(json_string_value(s));
   } else {
     setSkin(theme);
   }
-
-  fromJson(root);
 }
 
 void StalysModule::addSkinChangedListener(SkinChangedListener *listener) {

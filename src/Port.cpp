@@ -9,7 +9,7 @@ void port::skinChanged(const std::string &skin) {
 
   std::string svg = "res/" + _skin + "/port.svg";
 
-  setSvg(APP->window->loadSvg(asset::plugin(pluginInstance, svg)));
+  setSvg(Svg::load(asset::plugin(pluginInstance, svg)));
 
   fb->dirty = true;
 }

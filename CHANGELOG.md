@@ -1,6 +1,14 @@
 <a name="unreleased"></a>
 ## [Unreleased]
 
+## [2.0.0]
+### Port
+- Port to VCV Rack 2 (plugin version 2.x, `minRackVersion` 2.0.0); builds natively for macOS arm64 (Apple Silicon)
+- Fix patch loading: `dataFromJson()` no longer calls `Module::fromJson()`, which throws in Rack 2
+- Panel context menu rebuilt with Rack 2 menu helpers; panels set via `ModuleWidget::setPanel()`
+- Use `Svg::load()` instead of the deprecated `APP->window->loadSvg()`
+- Fix "Default to …" skin choice not being restored on startup
+
 ## [1.4.2] - 2020-12-21
 ### Bug
 - Fix build on windows ([#80](https://github.com/denischevalier/StalysVCVPlugin/issues/80))

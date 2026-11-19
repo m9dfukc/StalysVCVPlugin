@@ -1,4 +1,11 @@
-# If RACK_DIR is not defined when calling the Makefile, default to two directories above
+# RACK_DIR: Rack source tree two directories above if it has been built
+# (libRack present), otherwise the local prebuilt Rack SDK in ./Rack-SDK
+# (download from https://vcvrack.com/downloads/, see README).
+ifeq ($(wildcard ../../libRack.dylib ../../libRack.so ../../libRack.dll),)
+ifneq ($(wildcard Rack-SDK/plugin.mk),)
+RACK_DIR ?= Rack-SDK
+endif
+endif
 RACK_DIR ?= ../..
 
 # FLAGS will be passed to both the C and C++ compiler

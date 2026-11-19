@@ -1,17 +1,18 @@
 {
   "slug": "Stalys",
   "name": "Stalys",
-  "version": "1.4.2",
+  "version": "2.0.0",
+  "minRackVersion": "2.0.0",
   "license": "GPL-3.0-or-later",
   "brand": "Stalys",
   "author": "Denis Dubo Chevalier",
   "authorEmail": "stalysmusic@gmail.com",
   "authorUrl": "https://linktr.ee/stalysmusic",
-  "pluginUrl": "https://github.com/denischevalier/StalysVCVPlugin",
-  "manualUrl": "https://github.com/denischevalier/StalysVCVPlugin/blob/main/README.md",
-  "sourceUrl": "https://github.com/denischevalier/StalysVCVPlugin",
+  "pluginUrl": "https://github.com/m9dfukc/StalysVCVPlugin",
+  "manualUrl": "https://github.com/m9dfukc/StalysVCVPlugin/blob/main/README.md",
+  "sourceUrl": "https://github.com/m9dfukc/StalysVCVPlugin",
   "donateUrl": "https://www.patreon.com/stalysmusic",
-  "changelogUrl": "https://github.com/denischevalier/StalysVCVPlugin/blob/main/CHANGELOG.md",
+  "changelogUrl": "https://github.com/m9dfukc/StalysVCVPlugin/blob/main/CHANGELOG.md",
   "modules": [
     {
       "slug": "VCDualNeuron",

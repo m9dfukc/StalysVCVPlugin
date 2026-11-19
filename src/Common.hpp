@@ -2,7 +2,6 @@
 #include "plugin.hpp"
 #include "SkinChangedListener.hpp"
 #include "Skin.hpp"
-#include "Menu.hpp"
 #include "StalysModule.hpp"
 #include "StalysModuleWidget.hpp"
 #include "Knob.hpp"

@@ -6,7 +6,6 @@
 
 struct StalysModuleWidget : ModuleWidget, SkinChangedListener, DefaultSkinChangeListener {
   std::string slug;
-  rack::SvgPanel *modulePanel = NULL;
   Vec size;
 
   StalysModuleWidget();
@@ -16,8 +15,6 @@ struct StalysModuleWidget : ModuleWidget, SkinChangedListener, DefaultSkinChange
   void addParam(ParamWidget* param);
   void addInput(PortWidget* input);
   void addOutput(PortWidget* output);
-
-  virtual void contextMenu(Menu *menu) {}
 
   void skinChanged(const std::string& skin) override;
   void defaultSkinChanged(const std::string& skin) override;

@@ -1,7 +1,7 @@
 #pragma once
 #include "Common.hpp"
 
-struct port : rack::app::SvgPort, SkinChangedListener {
+struct port : SvgPort, SkinChangedListener {
   port() {
     shadow->opacity = 0;
     skinChanged("");
