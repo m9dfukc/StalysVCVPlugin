@@ -23,7 +23,7 @@ A set of modules exploring [cybernetics](https://en.m.wikipedia.org/wiki/Cyberne
 
 ### From a prebuilt package
 
-1. Get the `Stalys-<version>-<os>-<cpu>.vcvplugin` package for your platform (e.g. `Stalys-2.0.0-mac-arm64.vcvplugin` for Apple Silicon Macs), or build it yourself (see below).
+1. Download the `Stalys-<version>-<os>-<cpu>.vcvplugin` package for your platform from the [releases page](https://github.com/m9dfukc/StalysVCVPlugin/releases) (e.g. `Stalys-2.0.0-mac-arm64.vcvplugin` for Apple Silicon Macs), or build it yourself (see below). The packages are built automatically by GitHub Actions for macOS (arm64, x64), Linux (x64) and Windows (x64).
 2. Copy it into your Rack 2 user plugin folder:
    - macOS (Apple Silicon): `~/Library/Application Support/Rack2/plugins-mac-arm64/`
    - macOS (Intel): `~/Library/Application Support/Rack2/plugins-mac-x64/`
