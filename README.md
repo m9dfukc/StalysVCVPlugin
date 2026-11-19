@@ -1,14 +1,14 @@
-# Stalys
+# Stalys (VCV Rack 2 port)
 
 ![All Modules](/img/allmodules-hornet.png)
 
+> **This is a fork.** The Stalys modules, panels and documentation were created by [Stalys](https://linktr.ee/stalysmusic) (Denis Dubo Chevalier) in [denischevalier/StalysVCVPlugin](https://github.com/denischevalier/StalysVCVPlugin). This fork ([m9dfukc/StalysVCVPlugin](https://github.com/m9dfukc/StalysVCVPlugin)) only ports the plugin to VCV Rack 2 and Apple Silicon. It adds no new modules or music of its own. Descriptions of the modules and their background below come from the original author.
+
+> **Compatibility:** Version 2.x of this plugin targets **VCV Rack 2** (tested with Rack 2.6.6 on macOS Apple Silicon / arm64). It uses the standard Rack 2 build system, so it should also build on macOS x64, Linux and Windows with the matching Rack SDK. Patches made with the Rack 1 version (1.x) load unchanged, including their panel skin. For VCV Rack 1, use plugin version 1.4.2.
+
 ## Abstract
 
-This Plugin will contain the modules that I am creating in my study of [cybernetics](https://en.m.wikipedia.org/wiki/Cybernetics) in music.
-
-My goal is to create a [Turing-complete](https://en.m.wikipedia.org/wiki/Turing_completeness) set of instructions for VCV. I would also use it to teach my child about computing and programming :).
-
-My dream is to one day port it to eurorack (but I'd need to learn electronics first 😅).
+A set of modules exploring [cybernetics](https://en.m.wikipedia.org/wiki/Cybernetics) in music, designed as a [Turing-complete](https://en.m.wikipedia.org/wiki/Turing_completeness) set of instructions for VCV Rack.
 
 ## Credits
 
@@ -17,22 +17,60 @@ My dream is to one day port it to eurorack (but I'd need to learn electronics fi
 - Neuron VCV implementation: [Michael Hetrick](https://mhetrick.com/)
 - Befaco slew limiter VCV implementation: [Befaco](https://github.com/VCVRack/Befaco)
 - BogAudio skinable module classes: [BogAudio](https://github.com/bogaudio/BogaudioModules)
+- VCV Rack 2 / Apple Silicon port: [m9dfukc](https://github.com/m9dfukc/StalysVCVPlugin) (fork)
 
 ## Installation
 
-- **Dependencies:** Follow the steps in the [official VCV Rack manual](https://vcvrack.com/manual/Building#setting-up-your-development-environment). You do not need to build the Rack itself.
-- **Clone  variablethis repository in the destination of your choice:** `git clone https://github.com/denischevalier/StalysVCVPlugin`.
-- **Go into the plugin directory:** `cd StalysVCVPlugin`.
-- **Setup the environmnent:** `export RACK_DIR=path/to/your/sdk/installation`.
-- **Build and install the modules:** `make install`.
+### From a prebuilt package
+
+1. Get the `Stalys-<version>-<os>-<cpu>.vcvplugin` package for your platform (e.g. `Stalys-2.0.0-mac-arm64.vcvplugin` for Apple Silicon Macs), or build it yourself (see below).
+2. Copy it into your Rack 2 user plugin folder:
+   - macOS (Apple Silicon): `~/Library/Application Support/Rack2/plugins-mac-arm64/`
+   - macOS (Intel): `~/Library/Application Support/Rack2/plugins-mac-x64/`
+   - Linux: `~/.local/share/Rack2/plugins-lin-x64/`
+   - Windows: `%LOCALAPPDATA%\Rack2\plugins-win-x64\`
+3. Restart VCV Rack. It unpacks the package on startup, and the modules show up in the module browser under the **Stalys** brand.
+
+### Building from source
+
+**Dependencies:** a C++ toolchain, `make`, `jq` and `zstd`. See the [official VCV Rack manual](https://vcvrack.com/manual/Building#setting-up-your-development-environment) for details. You do not need to build Rack itself. On macOS:
+
+```bash
+xcode-select --install
+brew install jq zstd
+```
+
+**Rack SDK:** download the [Rack 2 SDK](https://vcvrack.com/downloads/) that matches your Rack version and platform, e.g. `Rack-SDK-2.6.6-mac-arm64.zip` for Apple Silicon. The Makefile picks the SDK in this order:
+
+1. `RACK_DIR`, if you set it: `export RACK_DIR=path/to/Rack-SDK`
+2. a *built* Rack source tree two directories above the plugin (i.e. the plugin lives in `Rack/plugins/StalysVCVPlugin` and `Rack/libRack.dylib` exists)
+3. an SDK unzipped into the plugin directory as `Rack-SDK/` (ignored by git)
+4. otherwise `../..`
+
+**Build and install:**
+
+```bash
+git clone https://github.com/m9dfukc/StalysVCVPlugin
+cd StalysVCVPlugin
+make dist      # builds dist/Stalys-<version>-<os>-<cpu>.vcvplugin
+make install   # builds and copies the package into your Rack 2 user plugin folder
+```
+
+On Apple Silicon the plugin is built natively for arm64 when you use the `mac-arm64` SDK. For an Intel build, use the `mac-x64` SDK.
 
 ## Examples
 
-Some example and real-life usage of this plugin can be found under the [/patches](/patches) directory.
+Example patches and real-life uses of this plugin by the original author are in the [/patches](/patches) directory.
 
 ## Skins
 
-New with v1.4.0 are four different skins for Stalys modules:
+Stalys modules come with four different skins (since v1.4.0). Right-click a module and open the **Panel** submenu to:
+
+- choose a skin for that module (**Bee**, **Hornet**, **Light**, **Dark**), or **Default** to follow the global default;
+- set the global default with **Default to …**. It is stored in `Stalys.json` in your Rack user folder and applies to all modules set to **Default**. Out of the box the default is **Hornet**.
+
+The chosen skin is saved with the patch.
+
 
 <details><summary>Bee</summary>
 
@@ -106,7 +144,7 @@ Plug two different LFOs to see complex rhythms emerge.
 
 ![8 Multiplier](/img/multiplier.png)
 
-This module is 8 four quadrant multipliers or ring-modulators (with attenuversion of the Carrier). A 5V voltage is normaled to the Carrier input. The Carrier knob goes from -2 to 2. Between -1 and 1, it will act like a normal four-quadrant. Outside those limits, the signal will be amplified up to ~2 times the original amplitude. This allows it to act as a gain stage before a distortion like our **8 Clip** module.
+This module is 8 four quadrant multipliers or ring-modulators (with attenuversion of the Carrier). A 5V voltage is normaled to the Carrier input. The Carrier knob goes from -2 to 2. Between -1 and 1, it will act like a normal four-quadrant. Outside those limits, the signal will be amplified up to ~2 times the original amplitude. This allows it to act as a gain stage before a distortion like the **8 Clip** module.
 
 If no cable is plugged into an output, it is summed to the next outputs.
 
@@ -279,12 +317,8 @@ This is just your regular 24hp blank panel, themable.
 
 </details>
 
-## Contribute
+## Support and contributing
 
-You can support me in many ways:
+**Problems with the Rack 2 port** (building, loading or running in Rack 2) belong in the [issues of this fork](https://github.com/m9dfukc/StalysVCVPlugin/issues). Pull requests are welcome there too.
 
-* If you want to support me financially, please consider going to [my Patreon](https://www.patreon.com/stalysmusic).
-* You can also listen to [my music](https://linktr.ee/stalysmusic).
-* If you use my modules in one of your projects (videos, tracks, education, etc.), please send me [an email](mailto:stalysmusic+vcv@gmail.com) for me to check it out. I'll make sure to reference you here.
-* You can [create issues](https://github.com/denischevalier/StalysVCVPlugin/issues), improve the [documentation](https://github.com/denischevalier/StalysVCVPlugin/wiki) or create [pull requests](https://github.com/denischevalier/StalysVCVPlugin/pulls) here.
-* If you know electronics and are interested in porting one of my modules, please feel free to [contact me](mailto:stalysmusic+vcv@gmail.com).
+**Original author:** the modules and their design are by Stalys. If you like them, you can support Stalys on [Patreon](https://www.patreon.com/stalysmusic). The [original repository](https://github.com/denischevalier/StalysVCVPlugin) and its [wiki](https://github.com/denischevalier/StalysVCVPlugin/wiki) remain the reference for the Rack 1 version.
